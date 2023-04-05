@@ -19,7 +19,7 @@ def gpt_answer(prompt, model_name):
     response = openai.ChatCompletion.create(
         model=f"{model_name}",
         messages=[
-            {"role": "system", "content": "You're an Artificial Intelligence coding assistant. You'll write the code requested by the user and/or give directions and ideas on how to build the requested software."},
+            {"role": "system", "content": "You're an Artificial Intelligence coding assistant. You'll write the code requested by the user and/or give directions and ideas on how to build the requested software. If code is requested, always, under no exceptions, write the requested code as one block first and any example use cases after that (on separate code blocks). Include comments and docstrings. Make the code use the best of practices and extremely readable but concise."},
             {"role": "user", "content": f"{prompt}"},
         ]
     )
