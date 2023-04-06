@@ -1,7 +1,6 @@
 import time
 import custom_command_line as cml
 import gpt_config as gptc
-import memory as mm
 
 user_message = ''
 gpt_answer = ''
@@ -35,8 +34,6 @@ while True:
         
         gpt_answer.replace('\"\"\"', "///")
         user_gpt_message = f'User:{user_message}\nAssistant: {gpt_answer}'
-        
-        mm.store_to_memory(user_gpt_message)
         
     except KeyboardInterrupt:
         # Exit the program if the user presses Ctrl-C
