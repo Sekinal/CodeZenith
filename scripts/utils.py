@@ -69,8 +69,13 @@ def generate_code_file(code, language):
         print(f"No file extension found for language '{language}'.")
         return
 
+    # Create the output_code directory if it doesn't already exist
+    output_dir = "output_code"
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
     # Write the code to a new file with the appropriate file extension
-    file_name = f"generated_code.{extension}"
+    file_name = f"{output_dir}/generated_code.{extension}"
     with open(file_name, "w") as f:
         f.write(code)
 

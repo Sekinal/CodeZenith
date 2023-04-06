@@ -2,10 +2,12 @@ import time
 import custom_command_line as cml
 import gpt_config as gptc
 import memory as mm
+import utils
 
 user_message = ''
 gpt_answer = ''
 user_gpt_message = ''
+code_block, language = None, None
 
 # Print initial messages to the console
 cml.pretty_print_system("This is a coding assistant. Please choose the GPT model to be used during this session.")
@@ -29,6 +31,11 @@ while True:
             break
 
         gpt_answer = gptc.gpt_answer(user_message, gpt_model)
+        
+        code_block, language = utils.extract_code_block(gpt_answer)
+        
+        if code_block != None:
+            utils.generate_code_file(code_block, language)
         
         # Print the GPT response to the console
         cml.pretty_print_gpt(gpt_answer)
