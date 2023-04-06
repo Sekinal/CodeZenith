@@ -1,9 +1,11 @@
 import time
 import custom_command_line as cml
 import gpt_config as gptc
+import memory as mm
 
 user_message = ''
 gpt_answer = ''
+user_gpt_message = ''
 
 # Print initial messages to the console
 cml.pretty_print_system("This is a coding assistant. Please choose the GPT model to be used during this session.")
@@ -30,12 +32,18 @@ while True:
         
         # Print the GPT response to the console
         cml.pretty_print_gpt(gpt_answer)
-    
+        
+        gpt_answer.replace('\"\"\"', "///")
+        user_gpt_message = f'User:{user_message}\nAssistant: {gpt_answer}'
+        
+        mm.store_to_memory(user_gpt_message)
+        
     except KeyboardInterrupt:
         # Exit the program if the user presses Ctrl-C
         cml.pretty_print_system('Program terminated by user')
         break
 
-    except:
+    except Exception as exception:
         # Handle any other exceptions that might occur during program execution
         cml.pretty_print_system('There was an error during the execution of the program')
+        cml.pretty_print_system(exception)
