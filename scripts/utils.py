@@ -2,6 +2,8 @@ import re
 from pygments.lexers import get_lexer_by_name
 from pygments.util import ClassNotFound
 import os
+import tiktoken
+import datetime
 
 def extract_code_block(message):
     """
@@ -69,9 +71,30 @@ def generate_code_file(code, language):
         print(f"No file extension found for language '{language}'.")
         return
 
+    # Create the output_code directory if it doesn't already exist
+    output_dir = "output_code"
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
     # Write the code to a new file with the appropriate file extension
-    file_name = f"generated_code.{extension}"
+    file_name = f"{output_dir}/generated_code.{extension}"
     with open(file_name, "w") as f:
         f.write(code)
 
     print(f"Code generated and saved to file '{os.path.abspath(file_name)}'.")
+    
+def get_token_count(string, gpt_model):
+    encoder = tiktoken.encoding_for_model(gpt_model)
+    encoded_string = encoder.encode(string)
+    
+    return len(encoded_string)
+
+def get_datetime():
+    now = datetime.datetime.now()
+    date = now.date()
+    hour, minute, second = now.hour(), now.minute(), now.second()
+    
+    total_date_string = f"Date: {date}; Time: {hour}:{minute}:{second}"
+    
+    return total_date_string
+    
